@@ -12,18 +12,23 @@
 (defn acertou-a-palavra-toda? [palavra acertos]
   (empty? (letras-restantes palavra acertos)))
 
+(defn acertou-chute? [chute palavra]
+  (.contains palavra chute))
+
+(defn le-chute! []
+  (read-line))
+
 (defn jogo [vidas palavra acertos]
   (if (= vidas 0)
     (perdeu)
     (if (acertou-a-palavra-toda? palavra acertos)
       (ganhou)
-      (println "Chuta amigo!"))))
-
-(def palavra (set ["A" "L" "U" "R"]))
-
-(and (contains? palavra "A") (contains? palavra "O"))
+      (let [chute (le-chute!)]
+        (if (acertou-chute? chute palavra)
+          (jogo vidas palavra (conj acertos chute))
+          (jogo (dec vidas) palavra acertos))))))
 
 (defn -main
   "Start..."
   [& args]
-  (println "Jogo da Forca em desenvolvimento..."))
+  (println "Hello world!"))
